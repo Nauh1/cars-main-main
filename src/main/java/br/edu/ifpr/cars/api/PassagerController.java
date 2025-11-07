@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.edu.ifpr.cars.domain.Passager;
 import br.edu.ifpr.cars.domain.PassagerRepository;
+import jakarta.validation.Valid;
 
 @Service
 @RestController
@@ -33,7 +34,7 @@ public class PassagerController {
         return passagerRepository.findAll();
     }
 
-     // definir uma Exception personalizada
+    // definir uma Exception personalizada
     @GetMapping("/passager/{id}")
     public Passager findPassager(@PathVariable("id") Long id) {
         return passagerRepository.findById(id).orElseThrow(
@@ -41,36 +42,39 @@ public class PassagerController {
     }
 
     @PostMapping("/passager")
-    public Passager createPassager(@RequestBody Passager passager) {
+    public Passager createPassager(@RequestBody @Valid Passager passager) {
         return passagerRepository.save(passager);
     }
 
     // update
     @PutMapping("/passager/{id}")
-    public Passager fullUpdatePassager(@PathVariable("id") Long id,
-            @RequestBody Passager passager) {
-                Passager foundPassager = findPassager(id);
+    public Passager fullUpdatePassager(@PathVariable("id") Long id, @RequestBody Passager passager) {
+        Passager foundPassager = findPassager(id);
         foundPassager.setName(passager.getName());
+        foundPassager.setCpf(passager.getName());
+        foundPassager.setEmail(passager.getEmail());
+
         foundPassager.setBirthDate(passager.getBirthDate());
         return passagerRepository.save(foundPassager);
     }
 
     @PatchMapping("/passager/{id}")
-    public Passager incrementalUpdatePassager(@PathVariable("id") Long id,
-            @RequestBody Passager passager){
-                Passager foundPassager = findPassager(id);
-            
-                foundPassager.setName(Optional.ofNullable(passager.getName())
-            .orElse(foundPassager.getName()));
+    public Passager incrementalUpdatePassager(@PathVariable("id") Long id, @RequestBody Passager passager) {
+        Passager foundPassager = findPassager(id);
 
-            foundPassager.setBirthDate(Optional.ofNullable(passager.getBirthDate())
-            .orElse(foundPassager.getBirthDate()));
+        foundPassager.setName(Optional.ofNullable(passager.getName()).orElse(foundPassager.getName()));
 
-            return passagerRepository.save(foundPassager);
+        foundPassager.setEmail(Optional.ofNullable(passager.getEmail()).orElse(foundPassager.getEmail()));
+
+        foundPassager.setCpf(Optional.ofNullable(passager.getCpf()).orElse(foundPassager.getCpf()));
+
+        foundPassager.setBirthDate(Optional.ofNullable(passager.getBirthDate()).orElse(foundPassager.getBirthDate()));
+
+        return passagerRepository.save(foundPassager);
     }
 
     @DeleteMapping("/passager/{id}")
-    public void deletePassager(@PathVariable("id") Long id){
+    public void deletePassager(@PathVariable("id") Long id) {
         passagerRepository.deleteById(id);
     }
 

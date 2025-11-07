@@ -49,32 +49,37 @@ public class DriverController {
 
     // update
     @PutMapping("/drivers/{id}")
-    public Driver fullUpdateDriver(@PathVariable("id") Long id,
-            @RequestBody Driver driver) {
+    public Driver fullUpdateDriver(@PathVariable("id") Long id, @RequestBody Driver driver) {
         Driver foundDriver = findDriver(id);
         foundDriver.setName(driver.getName());
+
+        foundDriver.setCpf(driver.getCpf());
+
+        foundDriver.setEmail(driver.getEmail());
+        
         foundDriver.setBirthDate(driver.getBirthDate());
         return driverRepository.save(foundDriver);
     }
 
     @PatchMapping("/drivers/{id}")
     public Driver incrementalUpdateDriver(@PathVariable("id") Long id,
-            @RequestBody Driver driver){
-            Driver foundDriver = findDriver(id);
-            
-            foundDriver.setName(Optional.ofNullable(driver.getName())
-            .orElse(foundDriver.getName()));
+            @RequestBody Driver driver) {
+        Driver foundDriver = findDriver(id);
 
-            foundDriver.setBirthDate(Optional.ofNullable(driver.getBirthDate())
-            .orElse(foundDriver.getBirthDate()));
+        foundDriver.setName(Optional.ofNullable(driver.getName()).orElse(foundDriver.getName()));
 
-            return driverRepository.save(foundDriver);
+        foundDriver.setCpf(Optional.ofNullable(driver.getCpf()).orElse(foundDriver.getCpf()));
+
+        foundDriver.setEmail(Optional.ofNullable(driver.getEmail()).orElse(foundDriver.getEmail()));
+
+        foundDriver.setBirthDate(Optional.ofNullable(driver.getBirthDate()).orElse(foundDriver.getBirthDate()));
+
+        return driverRepository.save(foundDriver);
     }
 
     @DeleteMapping("/drivers/{id}")
-    public void deleteDriver(@PathVariable("id") Long id){
+    public void deleteDriver(@PathVariable("id") Long id) {
         driverRepository.deleteById(id);
     }
-
 
 }
