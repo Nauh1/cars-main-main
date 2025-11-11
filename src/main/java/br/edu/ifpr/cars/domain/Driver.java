@@ -6,6 +6,10 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.edu.ifpr.cars.validate.AnoFabricado;
+import br.edu.ifpr.cars.validate.CNH;
+import br.edu.ifpr.cars.validate.PalavrasOfensivas;
+import br.edu.ifpr.cars.validate.Placa;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,5 +47,19 @@ public class Driver {
     @Past(message = "A data de nascimento deve estar no passado")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     LocalDate birthDate;
+
+    @NotBlank(message = "A placa não pode ser vazio")
+    @Placa
+    String placa;
+
+    @NotBlank(message = "A CNH não pode ser vazio")
+    String cnh;
+
+    @NotBlank(message = "o ano do carro não pode ser vazio")
+    @AnoFabricado
+    int carro;
+
+    @PalavrasOfensivas
+    String comentario;
 
 }
