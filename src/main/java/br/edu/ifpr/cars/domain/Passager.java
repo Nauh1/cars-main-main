@@ -15,18 +15,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;     
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
 @Data
-public class Passager{
+public class Passager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Pattern(regexp = "^[^\\s]+$")
     @NotBlank(message = "O nome não pode ser vazio")
-    @Size(min = 3,max = 50)
+    @Size(min = 3, max = 50)
     String name;
 
     @Pattern(regexp = "^[^\\s]+$")
@@ -38,7 +38,7 @@ public class Passager{
     @NotBlank(message = "O cpf não pode ser vazio")
     @CPF
     String cpf;
-    
+
     @NotNull(message = "A data de nascimento é obrigatória")
     @Past(message = "A data de nascimento deve estar no passado")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

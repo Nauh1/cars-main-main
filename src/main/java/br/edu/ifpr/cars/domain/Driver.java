@@ -30,7 +30,7 @@ public class Driver {
     Long id;
     @Pattern(regexp = "^[^\\s]+$")
     @NotBlank(message = "O nome não pode ser vazio")
-    @Size(min = 3,max = 50)
+    @Size(min = 3, max = 50)
     String name;
 
     @Pattern(regexp = "^[^\\s]+$")
@@ -42,7 +42,7 @@ public class Driver {
     @NotBlank(message = "O cpf não pode ser vazio")
     @CPF
     String cpf;
-    
+
     @NotNull(message = "A data de nascimento é obrigatória")
     @Past(message = "A data de nascimento deve estar no passado")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -53,6 +53,7 @@ public class Driver {
     String placa;
 
     @NotBlank(message = "A CNH não pode ser vazio")
+    @CNH
     String cnh;
 
     @NotBlank(message = "o ano do carro não pode ser vazio")

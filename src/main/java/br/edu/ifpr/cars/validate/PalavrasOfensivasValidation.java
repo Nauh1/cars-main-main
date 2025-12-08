@@ -6,21 +6,20 @@ import java.util.Arrays;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+public class PalavrasOfensivasValidation implements ConstraintValidator<PalavrasOfensivas, String> {
 
-public class PalavrasOfensivasValidation implements ConstraintValidator<PalavrasOfensivas, String>{
-
-    final static ArrayList<String> palavrasProibidas = new ArrayList<>(Arrays.asList("lixo","burro","idiota","fdp","imundo"));
+    final static ArrayList<String> palavrasProibidas = new ArrayList<>(
+            Arrays.asList("lixo", "burro", "idiota", "fdp", "imundo"));
 
     @Override
     public boolean isValid(String palavras, ConstraintValidatorContext context) {
         String[] listaPalavras = palavras.split(" ");
         for (String string : listaPalavras) {
-            if (palavrasProibidas.contains(string.toLowerCase())){
+            if (palavrasProibidas.contains(string.toLowerCase())) {
                 return false;
             }
         }
         return true;
     }
-
 
 }

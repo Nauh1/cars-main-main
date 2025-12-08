@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.edu.ifpr.cars.domain.Passager;
-import br.edu.ifpr.cars.domain.PassagerRepository;
+import br.edu.ifpr.cars.repository.PassagerRepository;
 import jakarta.validation.Valid;
 
 @Service
