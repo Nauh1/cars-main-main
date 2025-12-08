@@ -22,60 +22,52 @@ import br.edu.ifpr.cars.domain.Passager;
 import br.edu.ifpr.cars.repository.PassagerRepository;
 import jakarta.validation.Valid;
 
-@Service
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/passager", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PassagerController {
+
     @Autowired
     PassagerRepository passagerRepository;
 
-    @GetMapping("/passager")
+    @GetMapping
     public List<Passager> listPassagers() {
         return passagerRepository.findAll();
     }
 
-    // definir uma Exception personalizada
-    @GetMapping("/passager/{id}")
+    @GetMapping("/{id}")
     public Passager findPassager(@PathVariable("id") Long id) {
-        return passagerRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return passagerRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/passager")
+    @PostMapping
     public Passager createPassager(@RequestBody @Valid Passager passager) {
         return passagerRepository.save(passager);
     }
 
-    // update
-    @PutMapping("/passager/{id}")
-    public Passager fullUpdatePassager(@PathVariable("id") Long id, @RequestBody Passager passager) {
-        Passager foundPassager = findPassager(id);
-        foundPassager.setName(passager.getName());
-        foundPassager.setCpf(passager.getName());
-        foundPassager.setEmail(passager.getEmail());
-
-        foundPassager.setBirthDate(passager.getBirthDate());
-        return passagerRepository.save(foundPassager);
+    @PutMapping("/{id}")
+    public Passager fullUpdatePassager(@PathVariable("id") Long id, @RequestBody @Valid Passager passager) {
+        Passager found = findPassager(id);
+        found.setName(passager.getName());
+        found.setCpf(passager.getCpf()); // corrigi aqui
+        found.setEmail(passager.getEmail());
+        found.setBirthDate(passager.getBirthDate());
+        return passagerRepository.save(found);
     }
 
-    @PatchMapping("/passager/{id}")
+    @PatchMapping("/{id}")
     public Passager incrementalUpdatePassager(@PathVariable("id") Long id, @RequestBody Passager passager) {
-        Passager foundPassager = findPassager(id);
-
-        foundPassager.setName(Optional.ofNullable(passager.getName()).orElse(foundPassager.getName()));
-
-        foundPassager.setEmail(Optional.ofNullable(passager.getEmail()).orElse(foundPassager.getEmail()));
-
-        foundPassager.setCpf(Optional.ofNullable(passager.getCpf()).orElse(foundPassager.getCpf()));
-
-        foundPassager.setBirthDate(Optional.ofNullable(passager.getBirthDate()).orElse(foundPassager.getBirthDate()));
-
-        return passagerRepository.save(foundPassager);
+        Passager found = findPassager(id);
+        if (passager.getName() != null) found.setName(passager.getName());
+        if (passager.getEmail() != null) found.setEmail(passager.getEmail());
+        if (passager.getCpf() != null) found.setCpf(passager.getCpf());
+        if (passager.getBirthDate() != null) found.setBirthDate(passager.getBirthDate());
+        return passagerRepository.save(found);
     }
 
-    @DeleteMapping("/passager/{id}")
+    @DeleteMapping("/{id}")
     public void deletePassager(@PathVariable("id") Long id) {
         passagerRepository.deleteById(id);
     }
-
 }
+

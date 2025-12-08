@@ -56,11 +56,25 @@ public class Driver {
     @CNH
     String cnh;
 
-    @NotBlank(message = "o ano do carro não pode ser vazio")
+    @NotNull(message = "o ano do carro não pode ser vazio")
     @AnoFabricado
-    int carro;
+    Integer carro;
 
     @PalavrasOfensivas
     String comentario;
 
 }
+
+
+/*
+{
+  "name": "Carlos",
+  "email": "carlos@test.com",
+  "cpf": "11144477735",
+  "birthDate": "10/04/1990",
+  "placa": "BRA2E19",
+  "cnh": "98765432101",
+  "carro": 2018,
+  "comentario": "muitolegal"
+}
+*/
