@@ -20,7 +20,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Passager {
+public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -44,3 +44,12 @@ public class Passager {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     LocalDate birthDate;
 }
+
+/*
+{
+  "name": "Joao2",
+  "email": "joao@gmail.com",
+  "cpf": "123.456.789-09",
+  "birthDate": "01/01/2001"
+}
+*/

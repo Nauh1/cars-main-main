@@ -1,5 +1,8 @@
 package br.edu.ifpr.cars.api;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,26 +13,39 @@ import br.edu.ifpr.cars.service.TravelService;
 @RequestMapping("/api/travel")
 public class TravelController {
 
-    private final TravelService service;
+    @Autowired
+    private TravelService travelService;
 
-    public TravelController(TravelService service) {
-        this.service = service;
+    @GetMapping
+    public List<TravelRequest> listTravels() {
+        return travelService.listTravels();
+    }
+
+    @GetMapping("/{travelId}")
+    public TravelRequest listTravel(@PathVariable Long travelId) {
+        return travelService.findTravel(travelId);
     }
 
     @PostMapping
-    public ResponseEntity<TravelRequest> create(@RequestBody TravelRequest travel) {
-        //define a resposta http com status 201 e o body da resposta o objeto travel criado
-        return ResponseEntity.status(201).body(service.createTravel(travel));
+    public TravelRequest createTravel(@RequestBody TravelRequest travelRequest) {
+        return travelService.createTravel(travelRequest.getOrigin(), travelRequest.getDestination(),
+                travelRequest.getPassenger().getId());
     }
 
-    @PutMapping("/{id}/accept")
-    public ResponseEntity<TravelRequest> accept(@PathVariable Long id) {
-        return ResponseEntity.status(200).body(service.acceptTravel(id));
+    @PutMapping("/{travelId}/accept")
+    public TravelRequest acceptTravel(@PathVariable Long travelId,
+            @RequestParam Long driverId) {
+        return travelService.acceptTravel(travelId, driverId);
     }
 
-    @PutMapping("/{id}/refuse")
-    public ResponseEntity<TravelRequest> refuse(@PathVariable Long id) {
-        return ResponseEntity.status(200).body(service.refuseTravel(id));
+    @PutMapping("/{travelId}/refuse")
+    public TravelRequest refuseTravel(@PathVariable Long travelId) {
+        return travelService.refuseTravel(travelId);
+    }
+
+    @DeleteMapping("/{travelId}")
+    public ResponseEntity<Void> deleteTravel(@PathVariable Long travelId) {
+        travelService.deleteTravel(travelId);
+        return ResponseEntity.noContent().build();
     }
 }
-

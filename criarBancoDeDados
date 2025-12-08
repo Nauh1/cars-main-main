@@ -1,0 +1,9 @@
+create database cars_bd;
+
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'userSenha';
+
+GRANT ALL PRIVILEGES ON cars_bd.* TO 'user'@'localhost';
+
+FLUSH PRIVILEGES;
+
+USE cars_bd;

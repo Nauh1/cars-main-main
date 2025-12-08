@@ -6,6 +6,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -18,8 +21,25 @@ public class TravelRequest {
     private String origin;
     private String destination;
 
-    private Long passengerId;
+    @ManyToOne
+    @JoinColumn(name = "passenger_id")
+    @NotNull(message = "Passageiro é obrigatório")
+    private Passenger passenger;
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
 
     @Enumerated(EnumType.STRING)
     private TravelRequestStatus status;
 }
+
+/*
+ * {
+ * "origin": "centro",
+ * "destination": "Instituto Federal",
+ * "passenger": {
+ * "id": 1
+ * }
+ * }
+ */
