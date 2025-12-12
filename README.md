@@ -55,15 +55,15 @@
 }
 ```
 
-#### PUT http://localhost:8080/api/travels/{id}/accept?driverId=1
+#### PUT http://localhost:8080/api/travel/{id}/accept?driverId=1
 
-#### PUT http://localhost:8080/api/travels/{id}/refuse
+#### PUT http://localhost:8080/api/travel/{id}/refuse
 
 #### GET: http://localhost:8080/api/travel
 
 #### GET: http://localhost:8080/api/travel/{id}
 
-#### DELETE http://localhost:8080/api/travels/{id}
+#### DELETE http://localhost:8080/api/travel/{id}
 
 
 > **Nota:** É preciso criar um driver e passageiro antes de criar uma viagem.
